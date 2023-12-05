@@ -7,8 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "deploy": "push-dir --dir=build --branch=gh-pages --cleanup"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
