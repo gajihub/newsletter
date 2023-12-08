@@ -1,9 +1,6 @@
 import React, { ReactNode, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  setDialogInput,
-  clearDialogInput
-} from "@store/reducer/thumbInputReducer";
+import { setDialogInput } from "@store/reducer/thumbInputReducer";
 import { useStoreData } from "@store/storeSelectors";
 import {
   Dialog,
@@ -32,7 +29,6 @@ const InputDialog: React.FC<InputDialogProps> = ({
   open,
   onClose,
   title,
-  children,
   inputtype,
   inputIdentifier
 }) => {

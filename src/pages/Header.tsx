@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useStoreData } from "@store/storeSelectors";
 import { clearImagePath, setImagePath } from "@store/reducer/HeaderReducer";
 import {
