@@ -1,17 +1,28 @@
 import { Button } from "@mui/material";
 import { useStoreData } from "@store/storeSelectors";
-import Header from "@src/components/Header";
-import Content from "@src/components/Content";
-import Footer from "@src/components/Footer";
+import Header from "@pages/Header";
+import Content from "@pages/Content";
+import Footer from "@pages/Footer";
 import getExportHtml from "./ExportHtmlCode";
 import styles from "@styles/EditHtmlCode.module.scss";
 
 const EditHtmlCode = () => {
   const { imagePath } = useStoreData();
+  const { dialogInputData } = useStoreData();
+  const { thumbWrapsCountPart1 } = useStoreData();
+  const { thumbWrapsCountPart2 } = useStoreData();
+  const { thumbWrapsCountPart3 } = useStoreData();
+  const { thumbWrapsCountPart4 } = useStoreData();
 
   const EmailPreview = () => {
-    console.log(imagePath);
-    const previewHtml = getExportHtml(imagePath);
+    const previewHtml = getExportHtml(
+      imagePath,
+      dialogInputData,
+      thumbWrapsCountPart1,
+      thumbWrapsCountPart2,
+      thumbWrapsCountPart3,
+      thumbWrapsCountPart4
+    );
     const previewWindow = window.open("", "_blank");
     if (previewWindow) {
       previewWindow.document.write(previewHtml.props.children);
@@ -20,7 +31,14 @@ const EditHtmlCode = () => {
   };
 
   const EmailExport = () => {
-    const htmlContent = getExportHtml(imagePath);
+    const htmlContent = getExportHtml(
+      imagePath,
+      dialogInputData,
+      thumbWrapsCountPart1,
+      thumbWrapsCountPart2,
+      thumbWrapsCountPart3,
+      thumbWrapsCountPart4
+    );
     //뉴스레터 html 다운로드
     const blob = new Blob([htmlContent.props.children], { type: "text/html" });
     const href = URL.createObjectURL(blob);
