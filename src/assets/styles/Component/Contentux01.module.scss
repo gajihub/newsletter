@@ -4,6 +4,19 @@
     }
     .thumbW01_title{
         margin-top: 80px;
+        position:relative;
+        .imglayer {
+            top: -6px;
+            height: 75px;
+        }
+    }
+    .thumbW02_title{
+        margin-top: 80px;
+        position:relative;
+        .imglayer {
+            top: -6px;
+            height: 124px;
+        }
     }
 }
 
@@ -40,6 +53,7 @@
                 min-height: 34px;
             }
             svg {
+                display: none;
                 font-size: 20px;
             }
         }
@@ -57,6 +71,7 @@
                 min-height: 30px;
             }
             svg {
+                display: none;
                 font-size: 20px;
             }
         }
@@ -76,8 +91,13 @@
                 min-height: 35px;
             }
             svg {
+                display: none;
                 font-size: 20px;
             }
+        }
+        .addLinkBtn{
+            margin-top: 10px;
+            height: 40px;
         }
 }
 .imglayer {
@@ -88,7 +108,6 @@
     height: 100%;
     outline: 2px dotted #ffa199;
     background-color: rgba(255, 162, 153, .1);
-    
     cursor: pointer;
     .info {
         text-align: center;
@@ -96,6 +115,7 @@
         color: #fff;
     }
     svg {
+        display: none;
         font-size: 20px;
         color: #455a64;
     }
@@ -103,7 +123,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);;
+        transform: translate(-50%, -50%);
         z-index: 1;
     }
 }
@@ -116,10 +136,23 @@
     img{
         opacity: .5;
     }
+    .imglayer {
+        width: calc(100% - 170px)
+    }
+    .linkDel {
+        position: absolute;
+        top:-1px;
+        right: 5px;;
+        width: 155px;
+        height: 40px;
+    }
 }
 .controlBtn {
-    margin-top: 20px;
+    margin-top: 60px;
+    margin-left: 30px;
+    width: 100%;
     button {
+        width: calc(100% - 60px);
         height: 40px;
         font-size: 14px;
         font-weight: 700;

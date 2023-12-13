@@ -3,9 +3,6 @@ import { RootState } from "../types";
 
 export const useStoreData = () => {
   const imagePath = useSelector((state: RootState) => state.header.imagePath);
-  const thumbWraps = useSelector(
-    (state: RootState) => state.thumbControl.thumbWraps
-  );
   const dialogInputData = useSelector(
     (state: RootState) => state.thumbInput.dialogInputData
   );
@@ -21,6 +18,17 @@ export const useStoreData = () => {
   const thumbWrapsCountPart4 = useSelector(
     (state: RootState) => state.thumbInput.parts.part4
   );
+  const thumbWrapsCountPartAdd = useSelector(
+    (state: RootState) => state.thumbInput.parts.partAdd
+  );
+
+  const thumbWrapsAddCount = useSelector(
+    (state: RootState) => state.thumbInput.parts.isvisible
+  );
+
+  const linkVisibility = useSelector(
+    (state: RootState) => state.thumbInput.linkVisibility
+  );
 
   return {
     imagePath,
@@ -28,7 +36,9 @@ export const useStoreData = () => {
     thumbWrapsCountPart2,
     thumbWrapsCountPart3,
     thumbWrapsCountPart4,
+    thumbWrapsCountPartAdd,
+    thumbWrapsAddCount,
     dialogInputData,
-    thumbWraps
+    linkVisibility
   };
 };

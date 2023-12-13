@@ -3,8 +3,8 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#455a64"
-    }
+      main: "#455a64",
+    },
   },
   components: {
     // Name of the component
@@ -13,26 +13,26 @@ const theme = createTheme({
         // The props to change the default for.
         disableRipple: true,
         disableTouchRipple: true,
-        focusRipple: true
+        focusRipple: true,
       },
       styleOverrides: {
         root: {
           "&:active": {
-            boxShadow: "none"
+            boxShadow: "none",
           },
           "&:focus": {
-            outline: "none"
+            outline: "none",
           },
-          color: "#0047FF"
-        }
-      }
+          color: "#0047FF",
+        },
+      },
     },
     MuiButtonGroup: {
       styleOverrides: {
         root: {
-          boxShadow: "none"
-        }
-      }
+          boxShadow: "none",
+        },
+      },
     },
 
     MuiAccordion: {
@@ -40,19 +40,19 @@ const theme = createTheme({
         root: {
           boxShadow: "none",
           "&::before": {
-            display: "none"
-          }
-        }
-      }
+            display: "none",
+          },
+        },
+      },
     },
     MuiTableRow: {
       styleOverrides: {
         root: {
           "&:hover": {
-            backgroundColor: "transparent !important"
-          }
-        }
-      }
+            backgroundColor: "transparent !important",
+          },
+        },
+      },
     },
     MuiCssBaseline: {
       styleOverrides: () => `
@@ -67,9 +67,9 @@ const theme = createTheme({
           margin:0;
           padding: 0;
         }
-      `
-    }
-  }
+      `,
+    },
+  },
 });
 
 export default theme;

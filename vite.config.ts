@@ -12,13 +12,13 @@ export default defineConfig({
       { find: "@pages", replacement: path.resolve(__dirname, "src/pages") },
       {
         find: "@components",
-        replacement: path.resolve(__dirname, "src/components")
+        replacement: path.resolve(__dirname, "src/components"),
       },
       {
         find: "@styles",
-        replacement: path.resolve(__dirname, "src/assets/styles")
+        replacement: path.resolve(__dirname, "src/assets/styles"),
       },
-      { find: "@store", replacement: path.resolve(__dirname, "src/store/") }
-    ]
-  }
+      { find: "@store", replacement: path.resolve(__dirname, "src/store/") },
+    ],
+  },
 });

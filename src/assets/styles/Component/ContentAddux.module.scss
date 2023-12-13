@@ -1,6 +1,22 @@
 .cate_Wrap {
+    & + .cate_Wrap .thumbW01_title{
+        margin-top: 0;
+    }
     .thumbW01_title{
         margin-top: 80px;
+        position:relative;
+        .imglayer {
+            top: -6px;
+            height: 125px;
+        }
+    }
+    .thumbW02_title{
+        margin-top: 80px;
+        position:relative;
+        .imglayer {
+            top: -6px;
+            height: 124px;
+        }
     }
 }
 
@@ -35,7 +51,6 @@
             .imglayer {
                 top: -5px;
                 min-height: 34px;
-                height: auto;
             }
             svg {
                 display: none;
@@ -80,44 +95,12 @@
                 font-size: 20px;
             }
         }
-        .ListBox {
-            margin-top: 40px;
-            li {
-                display: flex;
-                margin: 0 27px;
-                justify-content: space-between;
-                padding:20px 0;
-                border-bottom: 1px solid #eee;
-                &:first-child {
-                    border-top: 1px solid #eee;
-                }
-                .lititle {
-                    margin:0;
-                    letter-spacing:-2px;
-                    font-family:  '맑은고딕', 'Apple SD Gothic Neo','Noto Sans KR', sans-serif;
-                    font-size: 15px;
-                    font-weight: bold;
-                    line-height: 25px;
-                    height: auto;
-                    word-break: break-all;
-                    padding-top: 5px;
-                    padding-right: 30px;
-                }
-                .left,.right {
-                    position: relative;
-                    .imglayer {
-                        top: -2px;
-                    }
-                }
-                .left{
-                    .imglayer {
-                        width: 516px;
-                        
-                    }
-                }
-            }
+        .addLinkBtn{
+            margin-top: 10px;
+            height: 40px;
         }
 }
+
 .imglayer {
     position: absolute;
     top:0;
@@ -146,6 +129,7 @@
         z-index: 1;
     }
 }
+
 .thumb_link {
     position: relative;
     padding-left: 27px;
@@ -155,14 +139,44 @@
     img{
         opacity: .5;
     }
+    .imglayer {
+        width: calc(100% - 170px)
+    }
+    .linkDel {
+        position: absolute;
+        top:-1px;
+        right: 5px;;
+        width: 155px;
+        height: 40px;
+    }
 }
 .controlBtn {
-    margin-top: 20px;
-    margin-left: 27px;
+    margin-top: 60px;
+    margin-left: 30px;
+    width: 100%;
     button {
-        width: calc(100% - 54px);
+        width: calc(100% - 60px);
         height: 40px;
         font-size: 14px;
         font-weight: 700;
+    }
+}
+
+[class~="MuiButtonGroup-root"]{
+    &.addBtnGroup {
+        border-top: 1px solid #ddd;
+        flex-direction: row;
+        margin: 100px 0 0 0;
+        padding-top: 30px;
+        width: 100%;
+        justify-content: center;
+        button {
+            height: 40px;
+        }
+        .btnText {
+            margin: 0 50px;
+            font-weight: 700;
+            line-height: 34px;
+        }
     }
 }

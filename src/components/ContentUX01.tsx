@@ -5,7 +5,8 @@ import { ModeEdit, Add, Delete } from "@mui/icons-material";
 import {
   setDialogInput,
   removeDialogInput,
-  setThumbWrapsCountPart1
+  setThumbWrapsCountPart1,
+  toggleLinkVisibility
 } from "@store/reducer/thumbInputReducer";
 import { useStoreData } from "@store/storeSelectors";
 import cx from "classnames";
@@ -21,8 +22,10 @@ const ContentUX01 = () => {
   });
   // thumbWraps 상태 (초기값: [1, 2])
   const [thumbWraps, setThumbWraps] = useState([1, 2]);
+
   const dispatch = useDispatch();
   const dialogInputData = useStoreData().dialogInputData;
+  const linkVisibility = useStoreData().linkVisibility;
 
   //dialog
   const contDialogOpen = (type: any, wrapString: any) => {
@@ -34,6 +37,15 @@ const ContentUX01 = () => {
 
   const contDialogClose = () => {
     setDialogInfo({ ...dialogInfo, open: false });
+  };
+
+  //ux 내 바로보기 삭제 추가
+  const linkBtnClick = (
+    wrapNumber: number,
+    isVisible: boolean,
+    linkIdentifier: String
+  ) => {
+    dispatch(toggleLinkVisibility(wrapNumber, isVisible, linkIdentifier));
   };
 
   const renderDialogContent = () => {
@@ -196,24 +208,61 @@ const ContentUX01 = () => {
               </div>
             </div>
           </div>
-          <div className={cx(styles.thumbBox, styles.thumb_link)}>
-            <img
-              src="https://lh3.googleusercontent.com/pw/ADCreHejqD35RtfeDfcxo6tneeiCfC3uUCBfTeP6qu30RWaylr9jOWNTJmZSJNckALEe8gVAn-qenGxPj-EFJdg-EOZpG2aUqFB9xwTLmmX61eX9GQ63o2bwhkxCRlSiYDPEPVXrfvORLOzvBqQ3Po4yN5GO=w82-h34-s-no-gm?authuser=1"
-              width="82"
-              height="34"
-              alt=""
-            />
-            <div
-              className={styles.imglayer}
-              onClick={() =>
-                contDialogOpen("link", `${wrapNumber}-link-${wrapNumber}`)
-              }>
-              <div className={styles.iconBox}>
-                <ModeEdit />
+          {/* 링크 영역 */}
+          {linkVisibility[`thumbWrap-${wrapNumber}-link-${wrapNumber}`] ==
+          false ? (
+            ""
+          ) : (
+            <div className={cx(styles.thumbBox, styles.thumb_link)}>
+              <img
+                src="https://lh3.googleusercontent.com/pw/ADCreHejqD35RtfeDfcxo6tneeiCfC3uUCBfTeP6qu30RWaylr9jOWNTJmZSJNckALEe8gVAn-qenGxPj-EFJdg-EOZpG2aUqFB9xwTLmmX61eX9GQ63o2bwhkxCRlSiYDPEPVXrfvORLOzvBqQ3Po4yN5GO=w82-h34-s-no-gm?authuser=1"
+                width="82"
+                height="34"
+                alt=""
+              />
+              <div
+                className={styles.imglayer}
+                onClick={() =>
+                  contDialogOpen("link", `${wrapNumber}-link-${wrapNumber}`)
+                }>
+                <div className={styles.iconBox}>
+                  <ModeEdit />
+                </div>
               </div>
+              <Button
+                className={styles.linkDel}
+                variant="contained"
+                onClick={() =>
+                  linkBtnClick(
+                    0,
+                    false,
+                    `thumbWrap-${wrapNumber}-link-${wrapNumber}`
+                  )
+                }>
+                <Delete />
+                바로보기 삭제
+              </Button>
             </div>
-          </div>
-
+          )}
+          {linkVisibility[`thumbWrap-${wrapNumber}-link-${wrapNumber}`] ==
+          false ? (
+            <Button
+              className={styles.addLinkBtn}
+              variant="contained"
+              fullWidth
+              onClick={() =>
+                linkBtnClick(
+                  1,
+                  true,
+                  `thumbWrap-${wrapNumber}-link-${wrapNumber}`
+                )
+              }>
+              <Add />
+              바로보기 추가
+            </Button>
+          ) : (
+            ""
+          )}
           <InputDialog
             key={`dialog-${index}-${wrapNumber}`}
             open={
@@ -237,31 +286,53 @@ const ContentUX01 = () => {
       <div className={cx(styles.thumb01_Wrap, styles.cate_Wrap)}>
         <div className={styles.thumbW01_title}>
           <img
-            src="https://lh3.googleusercontent.com/pw/ADCreHeP3mndOi5G4cff2B0nvhSAC9Gzjq1sA8R24PkwMMiMXa-ZWKxzq1GcgboWRNLxlNltzUA23kyN8FE0106bS7vZPjBBS07e76a69WKrb0OLqtSZwXytWgqkGpgVnUNWLPV94FzmaxXhQw_fQQ-KWysc=w660-h75-s-no-gm?authuser=1"
+            src={
+              dialogInputData[dialogInfo.inputIdentifier] &&
+              `thumbWrap-1-title-1` === dialogInfo.inputIdentifier
+                ? dialogInputData[dialogInfo.inputIdentifier]
+                : dialogInputData[`thumbWrap-1-title-1`]
+                  ? dialogInputData[`thumbWrap-1-title-1`]
+                  : "https://lh3.googleusercontent.com/pw/ADCreHeP3mndOi5G4cff2B0nvhSAC9Gzjq1sA8R24PkwMMiMXa-ZWKxzq1GcgboWRNLxlNltzUA23kyN8FE0106bS7vZPjBBS07e76a69WKrb0OLqtSZwXytWgqkGpgVnUNWLPV94FzmaxXhQw_fQQ-KWysc=w660-h75-s-no-gm?authuser=1"
+            }
             width="660"
             height="75"
             alt=""
           />
+          <div
+            className={styles.imglayer}
+            onClick={() => contDialogOpen("title", `1-title-1`)}>
+            <div className={styles.iconBox}>
+              <ModeEdit />
+            </div>
+          </div>
+          <InputDialog
+            open={
+              dialogInfo.open &&
+              dialogInfo.inputIdentifier == `thumbWrap-1-title-1`
+            }
+            onClose={contDialogClose}
+            title={`입력하기`}
+            inputtype={dialogInfo.type}
+            inputIdentifier={`thumbWrap-1-title-1`}>
+            {renderDialogContent()}
+          </InputDialog>
         </div>
         {renderThumbWraps()}
         {/* 버튼 영역 */}
         <ButtonGroup
           orientation="vertical"
-          fullWidth
           variant="outlined"
           className={styles.controlBtn}>
           {thumbWraps.length < 5 ? (
             <Button onClick={addThumbWrap}>
-              <Add />
-              추가
+              <Add />글 추가
             </Button>
           ) : (
             ""
           )}
           {thumbWraps.length > 2 ? (
             <Button onClick={removeThumbWrap}>
-              <Delete />
-              삭제
+              <Delete />글 삭제
             </Button>
           ) : (
             ""

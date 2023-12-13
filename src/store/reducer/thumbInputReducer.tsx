@@ -18,6 +18,16 @@ export const setThumbWrapsCountPart4 = (count: number) => ({
   payload: count
 });
 
+export const setThumbWrapsCountPartAdd = (count: number) => ({
+  type: "SET_THUMB_WRAPS_COUNT_PARTADD",
+  payload: count
+});
+
+export const setThumbWrapsAddCount = (isvisible: boolean) => ({
+  type: "SET_THUMB_WRAPS_ADD_COUNT",
+  payload: isvisible
+});
+
 export const setDialogInput = (
   inputIdentifier: string,
   inputValue: string
@@ -26,17 +36,26 @@ export const setDialogInput = (
   payload: { inputIdentifier, inputValue }
 });
 
-export const clearDialogInput = () => ({
-  type: "CLEAR_DIALOG_INPUT"
-});
-
 export const removeDialogInput = (inputIdentifier: string) => ({
   type: "REMOVE_DIALOG_INPUT",
   payload: inputIdentifier
 });
 
+export const toggleLinkVisibility = (
+  wrapNumber: number,
+  isVisible: boolean,
+  linkIdentifier: String
+) => ({
+  type: "TOGGLE_LINK_VISIBILITY",
+  payload: { wrapNumber, isVisible, linkIdentifier }
+});
+
+export const clearLinkVisibility = () => ({
+  type: "CLEAR_LINK_VISIBILITY"
+});
+
 interface DialogInputData {
-  [key: string]: string; // 인덱스 시그니처 추가
+  [key: string]: string;
 }
 
 // reducer.js
@@ -45,9 +64,12 @@ const initialState: StateType = {
     part1: 2,
     part2: 2,
     part3: 4,
-    part4: 2
+    part4: 1,
+    partAdd: 2,
+    isvisible: false
   },
-  dialogInputData: {}
+  dialogInputData: {},
+  linkVisibility: {}
 };
 
 interface StateType {
@@ -56,8 +78,11 @@ interface StateType {
     part2: number;
     part3: number;
     part4: number;
+    partAdd: number;
+    isvisible: boolean;
   };
   dialogInputData: DialogInputData;
+  linkVisibility: {};
 }
 
 const thumbInputReducer = (
@@ -85,6 +110,16 @@ const thumbInputReducer = (
         ...state,
         parts: { ...state.parts, part4: action.payload }
       };
+    case "SET_THUMB_WRAPS_COUNT_PARTADD":
+      return {
+        ...state,
+        parts: { ...state.parts, partAdd: action.payload }
+      };
+    case "SET_THUMB_WRAPS_ADD_COUNT":
+      return {
+        ...state,
+        parts: { ...state.parts, isvisible: action.payload }
+      };
     case "SET_DIALOG_INPUT":
       const { inputIdentifier, inputValue } = action.payload;
       return {
@@ -95,17 +130,27 @@ const thumbInputReducer = (
           [inputIdentifier]: inputValue
         }
       };
-    case "CLEAR_DIALOG_INPUT":
-      return {
-        ...state,
-        dialogInputData: {}
-      };
     case "REMOVE_DIALOG_INPUT":
       const updatedDialogInputData = { ...state.dialogInputData };
       delete updatedDialogInputData[action.payload];
       return {
         ...state,
         dialogInputData: updatedDialogInputData
+      };
+    case "TOGGLE_LINK_VISIBILITY":
+      const { isVisible, linkIdentifier } = action.payload;
+      return {
+        ...state,
+        linkVisibility: {
+          ...state.linkVisibility,
+          linkIdentifier,
+          [linkIdentifier]: isVisible
+        }
+      };
+    case "CLEAR_LINK_VISIBILITY":
+      return {
+        ...state,
+        linkVisibility: {}
       };
     default:
       return state;

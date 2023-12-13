@@ -5,7 +5,8 @@ import { ModeEdit, Add, Delete } from "@mui/icons-material";
 import {
   setDialogInput,
   removeDialogInput,
-  setThumbWrapsCountPart4
+  setThumbWrapsCountPart4,
+  toggleLinkVisibility
 } from "@store/reducer/thumbInputReducer";
 import { useStoreData } from "@store/storeSelectors";
 import cx from "classnames";
@@ -20,9 +21,11 @@ const ContentUX04 = () => {
     inputIdentifier: `thumbWrap04-${null}`
   });
   // thumbWraps 상태 (초기값: [1, 2])
-  const [thumbWraps, setThumbWraps] = useState([1, 2]);
+  const [thumbWraps, setThumbWraps] = useState([1]);
+
   const dispatch = useDispatch();
   const dialogInputData = useStoreData().dialogInputData;
+  const linkVisibility = useStoreData().linkVisibility;
 
   //dialog
   const contDialogOpen = (type: any, wrapString: any) => {
@@ -42,6 +45,15 @@ const ContentUX04 = () => {
     }
   };
 
+  //ux 내 바로보기 삭제 추가
+  const linkBtnClick = (
+    wrapNumber: number,
+    isVisible: boolean,
+    linkIdentifier: String
+  ) => {
+    dispatch(toggleLinkVisibility(wrapNumber, isVisible, linkIdentifier));
+  };
+
   //thumb 내 추가, 삭제
   const addThumbWrap = () => {
     if (thumbWraps.length < 5) {
@@ -51,7 +63,7 @@ const ContentUX04 = () => {
   };
 
   const removeThumbWrap = () => {
-    if (thumbWraps.length > 2) {
+    if (thumbWraps.length > 1) {
       const updatedThumbWraps = thumbWraps.slice(0, -1);
 
       setThumbWraps(updatedThumbWraps);
@@ -70,6 +82,8 @@ const ContentUX04 = () => {
       removedInputIdentifiers.forEach((inputIdentifier) => {
         dispatch(removeDialogInput(inputIdentifier));
       });
+
+      dispatch(setThumbWrapsCountPart4(thumbWraps.length - 1));
     }
   };
 
@@ -195,23 +209,64 @@ const ContentUX04 = () => {
               </div>
             </div>
           </div>
-          <div className={cx(styles.thumbBox, styles.thumb_link)}>
-            <img
-              src="https://lh3.googleusercontent.com/pw/ADCreHejqD35RtfeDfcxo6tneeiCfC3uUCBfTeP6qu30RWaylr9jOWNTJmZSJNckALEe8gVAn-qenGxPj-EFJdg-EOZpG2aUqFB9xwTLmmX61eX9GQ63o2bwhkxCRlSiYDPEPVXrfvORLOzvBqQ3Po4yN5GO=w82-h34-s-no-gm?authuser=1"
-              width="82"
-              height="34"
-              alt=""
-            />
-            <div
-              className={styles.imglayer}
-              onClick={() =>
-                contDialogOpen("link", `${wrapNumber}-link-${wrapNumber}`)
-              }>
-              <div className={styles.iconBox}>
-                <ModeEdit />
+          {/* 링크 영역 */}
+          {linkVisibility[`thumbWrap04-${wrapNumber}-link-${wrapNumber}`] ==
+          false ? (
+            ""
+          ) : (
+            <div className={cx(styles.thumbBox, styles.thumb_link)}>
+              <img
+                src="https://lh3.googleusercontent.com/pw/ADCreHejqD35RtfeDfcxo6tneeiCfC3uUCBfTeP6qu30RWaylr9jOWNTJmZSJNckALEe8gVAn-qenGxPj-EFJdg-EOZpG2aUqFB9xwTLmmX61eX9GQ63o2bwhkxCRlSiYDPEPVXrfvORLOzvBqQ3Po4yN5GO=w82-h34-s-no-gm?authuser=1"
+                width="82"
+                height="34"
+                alt=""
+              />
+              <div
+                className={styles.imglayer}
+                onClick={() =>
+                  contDialogOpen(
+                    "link",
+                    `thumbWrap04-${wrapNumber}-link-${wrapNumber}`
+                  )
+                }>
+                <div className={styles.iconBox}>
+                  <ModeEdit />
+                </div>
               </div>
+              <Button
+                className={styles.linkDel}
+                variant="contained"
+                onClick={() =>
+                  linkBtnClick(
+                    0,
+                    false,
+                    `thumbWrap04-${wrapNumber}-link-${wrapNumber}`
+                  )
+                }>
+                <Delete />
+                바로보기 삭제
+              </Button>
             </div>
-          </div>
+          )}
+          {linkVisibility[`thumbWrap04-${wrapNumber}-link-${wrapNumber}`] ==
+          false ? (
+            <Button
+              className={styles.addLinkBtn}
+              variant="contained"
+              fullWidth
+              onClick={() =>
+                linkBtnClick(
+                  1,
+                  true,
+                  `thumbWrap04-${wrapNumber}-link-${wrapNumber}`
+                )
+              }>
+              <Add />
+              바로보기 추가
+            </Button>
+          ) : (
+            ""
+          )}
 
           <InputDialog
             key={`dialog-${index}-${wrapNumber}`}
@@ -251,16 +306,14 @@ const ContentUX04 = () => {
           className={styles.controlBtn}>
           {thumbWraps.length < 5 ? (
             <Button onClick={addThumbWrap}>
-              <Add />
-              추가
+              <Add />글 추가
             </Button>
           ) : (
             ""
           )}
-          {thumbWraps.length > 2 ? (
+          {thumbWraps.length > 1 ? (
             <Button onClick={removeThumbWrap}>
-              <Delete />
-              삭제
+              <Delete />글 삭제
             </Button>
           ) : (
             ""
